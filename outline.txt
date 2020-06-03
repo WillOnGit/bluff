@@ -1,0 +1,18 @@
+players join, no accounts
+	enter name
+
+lobby with tables
+	create table w/ settings
+		start table
+	join table
+		waiting
+
+table
+	one round:
+		choose "definer"
+		ask for word input
+			input sent to all players while clue-giver defines
+		players submit definitions
+		voting
+		score reveal
+	end of rounds, scoreboard and replay voting
