@@ -1,3 +1,12 @@
+SPRINT MILESTONES
+=================
+1 - site welcome, user login
+2 - game lobby, dummy game
+3 - game mockup
+4 - full game, minimal css
+
+ROUGH OUTLINE OF UX
+===================
 players join, no accounts
 	enter name
 
@@ -16,3 +25,7 @@ table
 		voting
 		score reveal
 	end of rounds, scoreboard and replay voting
+
+NOTES
+=====
+Some code taken from https://codyparker.com/django-channels-with-react/3/ and https://scotch.io/tutorials/build-a-to-do-application-using-django-and-react
