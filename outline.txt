@@ -7,8 +7,7 @@ SPRINT MILESTONES
 
 ROUGH OUTLINE OF UX
 ===================
-players join, no accounts
-	enter name
+login/register for account
 
 lobby with tables
 	create table w/ settings
@@ -29,3 +28,8 @@ table
 NOTES
 =====
 Some code taken from https://codyparker.com/django-channels-with-react/3/ and https://scotch.io/tutorials/build-a-to-do-application-using-django-and-react
+
+UPDATES
+=======
+Passwordless accounts are a bit of a ballache, as I find all things authentication with Django, so for now I'll just use the default auth system and think about disabling passwords later.
+It's possible I may end up not even using the User model as the "players" so it might become irrelevant later on.

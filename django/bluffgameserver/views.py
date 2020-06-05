@@ -1,8 +1,13 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.conf import settings
+from django.urls import reverse
 
 def index(request):
-    return HttpResponse("This will eventually be a quick signup page, simply asking for a name before redirecting to /lobby. Do that manually for now!")
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('lobby'))
+    else:
+        return HttpResponseRedirect(settings.LOGIN_URL)
 
 def quick_signup(request):
     return HttpResponse("yo")
