@@ -2,4 +2,10 @@
 {% block body %}
 <h1>Lobby</h1>
 <p>Welcome, {{user}}!</p>
+<p>Here are the currently active games, or you can <a href='{% url 'create_game' %}'>create your own</a>.
+<ul>
+	{% for game in games %}
+	<li><a href={% url 'game_summary' game.id %}>{{ game.name }}</a></li>
+	{% endfor %}
+</ul>
 {% endblock %}

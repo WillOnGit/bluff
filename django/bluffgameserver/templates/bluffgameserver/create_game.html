@@ -1,0 +1,16 @@
+{% extends 'bluffgameserver/base.html' %}
+{% block body %}
+<h1>New game</h1>
+{% if form.errors %}
+<p>Something went wrong, please try again.</p>
+{% endif %}
+<form method="post" action="{% url 'create_game' %}">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<div id='field_highlight_container'>
+		<label for="id_mandatory_field">If you can read this, please ignore this box or I will ignore you:</label>
+		<input type="text" name="mandatory_field" maxlength="254" id="id_mandatory_field">
+	</div>
+	<input type='submit' value='Create'>
+</form>
+{% endblock %}

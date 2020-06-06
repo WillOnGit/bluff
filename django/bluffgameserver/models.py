@@ -10,11 +10,11 @@ class BluffGame(models.Model):
     max_players = models.IntegerField(default=4)
     active_players = models.IntegerField(default=0)
 
-    date_started = models.DateTimeField()
+    date_started = models.DateTimeField(null=True, blank=True)
     has_started = models.BooleanField(default=False)
     # initially just support for one round per player
     current_round = models.IntegerField(default=0)
-    current_turn = models.ForeignKey(User, related_name='current_turn', on_delete=models.PROTECT)
+    current_turn = models.ForeignKey(User, related_name='current_turn', on_delete=models.PROTECT, null=True, blank=True)
 
     has_completed = models.BooleanField(default=False)
     date_completed = models.DateTimeField(null=True, blank=True)
