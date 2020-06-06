@@ -2,8 +2,12 @@
 {% block body %}
 <h1>Game {{ game.id }} - {{ game.name }}</h1>
 <p>This game was created by {{ game.creator }}.</p>
-<p>{{ game.active_players }}/{{ game.max_players }} players have joined.</p>
-{% if game.active_players < game.max_players %}
-<p>You can join by <a href='/test'>clicking here</a>.</p>
+<p>{{ active_players }}/{{ game.max_players }} players have joined.</p>
+{% if already_joined %}
+<p>You've joined! Sit back and wait for the start.</p>
+{% elif active_players < game.max_players %}
+<p>You can join by <a href='{% url 'join_game' game.id %}'>clicking here</a>.</p>
+{% else %}
+<p>Sorry, this game is full.</p>
 {% endif %}
 {% endblock %}

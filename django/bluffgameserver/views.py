@@ -23,7 +23,13 @@ def present_lobby(request):
 @login_required
 def view_game(request, game_id):
     game = get_object_or_404(BluffGame, pk=game_id)
-    return render(request, 'bluffgameserver/game_summary.html', {'game': game})
+    players = game.players.all()
+    active_players = len(players)
+    if request.user in players:
+        already_joined = True
+    else:
+        already_joined = False
+    return render(request, 'bluffgameserver/game_summary.html', {'game': game,'active_players': active_players,'already_joined': already_joined})
 
 @login_required
 def create_game(request):
@@ -34,7 +40,6 @@ def create_game(request):
             return HttpResponseRedirect(reverse('lobby'))
         submission = NewGameForm(request.POST)
         if submission.is_valid():
-            print(submission.cleaned_data)
             x = submission.save(commit=False)
             x.creator = request.user
             x.save()
@@ -43,9 +48,14 @@ def create_game(request):
             return HttpResponse('Your form is invalid, how have you managed that?')
     else:
         form = NewGameForm()
-
-    return render(request, 'bluffgameserver/create_game.html', {'form': form})
+        return render(request, 'bluffgameserver/create_game.html', {'form': form})
 
 @login_required
-def join_game(request):
-    return HttpResponse("yo")
+def join_game(request, game_id):
+    game = get_object_or_404(BluffGame, pk=game_id)
+    active_players = len(game.players.all())
+    if active_players < game.max_players:
+        game.players.add(request.user)
+        return HttpResponseRedirect(reverse('game_summary',args=(game.pk,)))
+    else:
+        return HttpResponse("Sorry, dis bitch full and your request has been yeeted :(")

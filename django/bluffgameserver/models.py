@@ -8,7 +8,7 @@ class BluffGame(models.Model):
     #opponent = models.ForeignKey(
     #    User, related_name='opponent', null=True, blank=True)
     max_players = models.IntegerField(default=4)
-    active_players = models.IntegerField(default=0)
+    players = models.ManyToManyField(User)
 
     date_started = models.DateTimeField(null=True, blank=True)
     has_started = models.BooleanField(default=False)
