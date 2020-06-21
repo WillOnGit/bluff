@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import BluffGame
 
-# Register your models here.
+class BluffAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(BluffGame,BluffAdmin)

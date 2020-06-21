@@ -17,14 +17,13 @@ please login with an account that has access.</p>
 {% endif %}
 
 <form method="post" action="{% url 'login' %}">
-	<form action='/login' method='POST'>
-		{% csrf_token %}
-		{{ form.as_p }}
-		<div id='field_highlight_container'>
-			<label for="id_mandatory_field">If you can read this, please ignore this box or I will ignore you:</label>
-			<input type="text" name="mandatory_field" maxlength="254" id="id_mandatory_field">
-		</div>
-		<input type='submit' value='RSVP!'>
-	</form>
-	<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-	{% endblock %}
+	{% csrf_token %}
+	{{ form.as_p }}
+	<div id='field_highlight_container'>
+		<label for="id_mandatory_field">If you can read this, please ignore this box or I will ignore you:</label>
+		<input type="text" name="mandatory_field" maxlength="254" id="id_mandatory_field">
+	</div>
+	<input type='submit' value='RSVP!'>
+</form>
+<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+{% endblock %}
