@@ -1,7 +1,7 @@
 {% extends 'bluffgameserver/base.html' %}
 {% block body %}
 <h1>Game {{ game.id }} - {{ game.name }}</h1>
-<p>This game was created by {{ game.creator }}.</p>
+<p>This game was created by {% if user_created_game %}you!{% else %}{{ game.creator }}.{% endif %}</p>
 <p>{{ active_players }}/{{ game.max_players }} players have joined.</p>
 {% if already_joined %}
 <p>You've joined! Sit back and wait for the start.</p>
@@ -9,5 +9,9 @@
 <p>You can join by <a href='{% url 'join_game' game.id %}'>clicking here</a>.</p>
 {% else %}
 <p>Sorry, this game is full.</p>
+{% endif %}
+{% if user_created_game %}
+<p>Everybody here?</p>
+<button formaction='{% url 'start_game' game.id %}'>Start game</button>
 {% endif %}
 {% endblock %}

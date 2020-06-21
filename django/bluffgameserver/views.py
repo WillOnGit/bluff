@@ -18,30 +18,37 @@ def quick_signup(request):
 @login_required
 def present_lobby(request):
     games = BluffGame.objects.all()
-    return render(request, 'bluffgameserver/lobby.html', {'games': games})
+    return render(request, 'bluffgameserver/lobby.html', {'games':games})
 
 @login_required
 def view_game(request, game_id):
     game = get_object_or_404(BluffGame, pk=game_id)
     players = game.players.all()
     active_players = len(players)
-    if request.user in players:
+    if request.user == game.creator:
+        user_created_game = True
+        already_joined = True
+    elif request.user in players:
+        user_created_game = False
         already_joined = True
     else:
+        user_created_game = False
         already_joined = False
-    return render(request, 'bluffgameserver/game_summary.html', {'game': game,'active_players': active_players,'already_joined': already_joined})
+    return render(request, 'bluffgameserver/game_summary.html', {'game':game, 'active_players':active_players, 'already_joined':already_joined, 'user_created_game':user_created_game})
 
 @login_required
 def create_game(request):
     if request.method == 'POST':
         # check for bot submissions...
-        # ...submitted by person, so process
         if request.POST['mandatory_field']!='':
             return HttpResponseRedirect(reverse('lobby'))
+        # ...submitted by person, so process
         submission = NewGameForm(request.POST)
         if submission.is_valid():
             x = submission.save(commit=False)
             x.creator = request.user
+            x.save()
+            x.players.add(request.user)
             x.save()
             return HttpResponseRedirect(reverse('game_summary',args=(x.pk,)))
         else:
@@ -59,3 +66,7 @@ def join_game(request, game_id):
         return HttpResponseRedirect(reverse('game_summary',args=(game.pk,)))
     else:
         return HttpResponse("Sorry, dis bitch full and your request has been yeeted :(")
+
+@login_required
+def start_game(request):
+    return HttpResponse("yo")
